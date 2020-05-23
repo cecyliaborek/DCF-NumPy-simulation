@@ -10,6 +10,7 @@ cw = np.ones(N) * 16
 backoffs = np.random.randint(low=0, high=16, size=N)
 
 
+
 for round in range(simulation_rounds):
     min_backoff = np.amin(backoffs)
     next_tx = np.where(backoffs == min_backoff)[0]
@@ -21,8 +22,8 @@ for round in range(simulation_rounds):
     else:
         for tx in next_tx:
             collisions[tx] +=1
-            if cw[tx] < 1024:
-                cw[tx] *= 2
+            #if cw[tx] < 1024:
+                #cw[tx] *= 2
             backoffs[tx] = np.random.randint(low=0, high=cw[tx])
 
 
@@ -33,3 +34,4 @@ print("per STA successful transmissions:", successful)
 print("per STA collisions:", collisions)
 print("per STA collision probability:", collision_probability)
 print("average collision probability:", mean_collision_probability)
+print(type(mean_collision_probability))
