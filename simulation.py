@@ -17,9 +17,9 @@ def dcf_simulation(N, cw_min, cw_max):
 
     successful = np.zeros(N)
     collisions = np.zeros(N)
-    cw = np.ones(N) * cw_min
+    cw = np.ones(N) * (cw_min + 1)
 
-    backoffs = np.random.randint(low=0, high=cw_min, size=N)
+    backoffs = np.random.randint(low=0, high=cw_min+1, size=N)
 
     for round in range(simulation_rounds):
         min_backoff = np.amin(backoffs)
@@ -27,7 +27,7 @@ def dcf_simulation(N, cw_min, cw_max):
         backoffs -= min_backoff
         if len(next_tx) == 1:
             successful[next_tx] +=1
-            cw[next_tx] = cw_min
+            cw[next_tx] = cw_min+1
             backoffs[next_tx] = np.random.randint(low=0, high=cw[next_tx])
         else:
             for tx in next_tx:
