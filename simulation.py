@@ -8,6 +8,8 @@ def dcf_simulation(N, cw_min, cw_max):
         N {int} -- number of stations contending for the wireless medium
         cw_min {int} -- value of CWmin of BEB algorithm
         cw_max {int} -- value of CWmax of BEB algorithm
+        
+        Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
     Returns:
         numpy.float64 -- mean probabilty of collision for station
@@ -24,7 +26,7 @@ def dcf_simulation(N, cw_min, cw_max):
     for round in range(simulation_rounds):
         min_backoff = np.amin(backoffs)
         next_tx = np.where(backoffs == min_backoff)[0]
-        backoffs -= min_backoff
+        backoffs = backoffs - min_backoff - 1
         if len(next_tx) == 1:
             successful[next_tx] +=1
             cw[next_tx] = cw_min+1
@@ -32,8 +34,7 @@ def dcf_simulation(N, cw_min, cw_max):
         else:
             for tx in next_tx:
                 collisions[tx] +=1
-                if cw[tx] < cw_max:
-                    cw[tx] *= 2
+                cw[tx] = min(cw_max+1, cw[tx]*2)
                 backoffs[tx] = np.random.randint(low=0, high=cw[tx])
 
     collision_probability = np.array([collisions[sta]/(successful[sta] + collisions[sta]) for sta in range(N)])

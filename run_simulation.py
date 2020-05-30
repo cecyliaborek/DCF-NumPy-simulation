@@ -3,11 +3,11 @@ import csv
 import matplotlib.pyplot as plt
 import pandas as pd
 
-N = 10
+N = 10 #number of contending stations
 no_stations = [i + 1 for i in range(N)]
 
-cw_min = 16
-cw_max = 16
+cw_min = 15
+cw_max = 15
 collision_probability = list(map(lambda n: dcf_simulation(n, cw_min, cw_max), no_stations))
 
 validation_results = pd.read_csv('results/results_validation.csv')

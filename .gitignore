@@ -4,6 +4,7 @@
 
 ### my files to exclude ###
 /results/Walidacja wyników.xlsx
+/resources/*
 
 
 ### Code ###
