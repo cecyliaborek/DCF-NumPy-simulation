@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=code,python
 
 ### my files to exclude ###
-/results/Walidacja wyników.xlsx
+/validation/Walidacja wyników.xlsx
 /resources/*
 
 
