@@ -1,6 +1,6 @@
 import numpy as np
 
-def dcf_simulation(N, cw_min, cw_max):
+def dcf_simulation(N, cw_min, cw_max, seed):
     """Simulates DCF function as method of multiple access in 802.11 network
     and returns mean probability of colliosion per station
 
@@ -8,6 +8,7 @@ def dcf_simulation(N, cw_min, cw_max):
         N {int} -- number of stations contending for the wireless medium
         cw_min {int} -- value of CWmin of BEB algorithm
         cw_max {int} -- value of CWmax of BEB algorithm
+        seed -- seed for the numpy random generator, allowing to reproduce the simulation
         
         Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
@@ -21,6 +22,7 @@ def dcf_simulation(N, cw_min, cw_max):
     collisions = np.zeros(N)
     cw = np.ones(N) * (cw_min + 1)
 
+    np.random.seed(seed)
     backoffs = np.random.randint(low=0, high=cw_min+1, size=N)
 
     for round in range(simulation_rounds):
