@@ -26,7 +26,7 @@ matlab_results = pd.read_csv('validation/results_matlab_ready.csv')
 p_coll_matlab = matlab_results[['N', 'p_coll_matlab']]
 
 simulation_results = simulation_results.merge(validation_p_coll, on='N')
-simulation_results= simulation_results.rename(columns={'p_coll':'p_coll_model'})
+simulation_results = simulation_results.rename(columns={'p_coll':'p_coll_model'})
 
 simulation_results.to_csv(f'results/simulation_results_{cw_min}_{cw_max}.csv')
 
