@@ -10,9 +10,10 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate = 54, control_rate = 6, ma
         cw_min (int): value of CWmin of BEB algorithm
         cw_max (int): value of CWmax of BEB algorithm
         seed (int): seed for the numpy random generator, allowing to reproduce the simulation
-        data_rate (int): rate at which data is transmitted in Mb/s (one of the defined in 802.11a standard)
-        control_rate (int): rate at which control data is transmitted in Mb/s
-        mac_payload (int): payload of MAC frame in B, maximally 2304B
+        data_rate (int): rate at which data is transmitted in Mb/s (one of the defined in 802.11a standard),
+            default 54 Mb/s
+        control_rate (int): rate at which control data is transmitted in Mb/s, default 6 Mb/s
+        mac_payload (int): payload of MAC frame in B, maximally 2304B, default 2304Bs
         
         Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
@@ -97,11 +98,11 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload):
     mac_header = 36*8 #bits
     mac_tail = 4*8 #bits
     mac_frame = mac_header + mac_payload*8 + mac_tail #bits
-    padding = math.ceil((service + mac_frame + tail)/bits_per_symbol[data_rate]) * bits_per_symbol[data_rate] - (service + mac_frame + tail) #bits
+    padding = (math.ceil((service + mac_frame + tail)/bits_per_symbol[data_rate]) * bits_per_symbol[data_rate]) - (service + mac_frame + tail) #bits
 
     data_duration = ofdm_preamble + ofdm_signal_duration + (service + mac_frame + tail + padding)/(data_rate * 1e6) #s
 
     tx_time = difs + data_duration + sifs + ack_duration #s
     tx_time_slots = math.ceil(tx_time/slot_duration) + backoff_slots #slots
 
-    return tx_time_slots
+    return tx_time
