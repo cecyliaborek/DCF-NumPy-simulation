@@ -18,50 +18,62 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate = 54, control_rate = 6, ma
         Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
     Returns:
-        numpy.float64: mean probabilty of collision for station
+        Results: class that has two fields - mean per station throughput in b/s and mean per station
+            probability of collision
     """
 
     simulation_rounds  = 10000
     retry_limit = 4
+    slot_time = 9e-6 #s
 
-    successful = np.zeros(N)
-    collisions = np.zeros(N)
-    retransmissions = np.zeros(N)
-    cw = np.ones(N) * (cw_min + 1)
+    successful = np.zeros(N) # successful transmissions per station
+    collisions = np.zeros(N) # collisions per station
+    retransmissions = np.zeros(N) # counter of 
+    cw = np.ones(N) * (cw_min + 1) # table of current CW for each station, changed after collisions
+                                   # and reset back to cw_min on success, contains upper excluded
+                                   # limits, i.e. 16, 32,..., 1024
 
-    tx_time = np.zeros(simulation_rounds)
+    tx_time = np.zeros(simulation_rounds) # times of all contention rounds
+    throughput = np.zeros(N) # throughput per station
 
-    np.random.seed(seed)
-    backoffs = np.random.randint(low=0, high=cw_min+1, size=N)
+    np.random.seed(seed) # setting the seed of PRN generator
+    backoffs = np.random.randint(low=0, high=cw_min+1, size=N) # random backoff for each station
 
     for round in range(simulation_rounds):
-        min_backoff = np.amin(backoffs)
+        min_backoff = np.amin(backoffs) #finding the minimal value of backoff
         next_tx = np.where(backoffs == min_backoff)[0]
-        backoffs = backoffs - min_backoff - 1
-        if len(next_tx) == 1:
+        backoffs = backoffs - min_backoff - 1 #subtracting from all stations' backoffs, time they've already waited
+        if len(next_tx) == 1: #only one station had smallest backoff - success
             successful[next_tx] +=1
             retransmissions[next_tx] = 0
             cw[next_tx] = cw_min+1
             backoffs[next_tx] = np.random.randint(low=0, high=cw[next_tx])
-        else:
+        else: #more than one station with smallest backoff - collision
             for tx in next_tx:
                 collisions[tx] +=1
                 if retransmissions[tx] <= retry_limit:
                     retransmissions[tx] +=1
-                    cw[tx] = min(cw_max+1, cw[tx]*2)
-                else:
+                    cw[tx] = min(cw_max+1, cw[tx]*2) 
+                    # cw is always the upper limit (excluded), therefore we only need to
+                    # multiply it by two to get the next value of cw limit
+                else: #if retry limit is met, values of cw and retransmissions couter are reset
                     retransmissions[tx] = 0
                     cw[tx] = cw_min + 1
-                
+                #new backoff chosen for all the station that collided
                 backoffs[tx] = np.random.randint(low=0, high=cw[tx])
         tx_time[round] = transmission_time(min_backoff, data_rate, control_rate, mac_payload)
 
+    simulation_results = Results()
+
+    #calculation of collision probabilty per station and mean value of it
     collision_probability = collisions/(successful + collisions)
-    mean_collision_probability = np.mean(collision_probability)
+    simulation_results.mean_collision_probability = np.mean(collision_probability)
 
-    print(tx_time)
+    #calculation of throughput per station in b/s and mean value of it
+    throughput = successful * mac_payload * 8 / (np.sum(tx_time) * slot_time)
+    simulation_results.mean_throughput = np.mean(throughput)
 
-    return mean_collision_probability
+    return simulation_results
 
 
 def transmission_time(backoff_slots, data_rate, control_rate, mac_payload):
@@ -105,4 +117,12 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload):
     tx_time = difs + data_duration + sifs + ack_duration #s
     tx_time_slots = math.ceil(tx_time/slot_duration) + backoff_slots #slots
 
-    return tx_time
+    print(tx_time)
+    return tx_time_slots
+
+
+class Results:
+
+    def __init__(self):
+        self.mean_collision_probability = 0
+        self.mean_throughput = 0
