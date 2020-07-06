@@ -24,7 +24,7 @@ simulation_results = []
 for n in no_stations:
     for r in runs:
         current_run = [r, n, cw_min, cw_max]
-        run_results = dcf_simulation(n, cw_min, cw_max, r)
+        run_results = dcf_simulation(N=n, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=1472)
         current_run.extend([
             run_results.mean_collision_probability,
             run_results.mean_throughput])
@@ -32,7 +32,7 @@ for n in no_stations:
 
 simulation_results = np.array(simulation_results)
 
-# probability of collision validation
+# probability of collision results
 p_coll_results = pd.DataFrame(np.delete(simulation_results, -1, axis=1), columns=[
     'run',
     'N',
@@ -41,32 +41,14 @@ p_coll_results = pd.DataFrame(np.delete(simulation_results, -1, axis=1), columns
     'p_coll_simulation'
 ])
 
-# extracting probability of collision from results of model calculation
-validation_results = pd.read_csv(f'validation/results_validation_{cw_min}_{cw_max}.csv')
-validation_p_coll = validation_results[['N', 'p_coll']]
-
-#extracting probability of collision from results of matlab wifi_nr_model simulation
-matlab_results = pd.read_csv('validation/results_matlab_ready.csv')
-p_coll_matlab = matlab_results[['N', 'p_coll_matlab']]
-
-#merging the simulation and model results
-p_coll_results = p_coll_results.merge(validation_p_coll, on='N')
-p_coll_results = p_coll_results.rename(columns={'p_coll':'p_coll_model'})
-
-p_coll_results.to_csv(f'results/simulation_results_{cw_min}_{cw_max}_{retry}.csv')
-
 # grouping the results by the same value of N and calculating the mean of probability of collision for each N
-final_p_coll_results = p_coll_results.groupby([
+p_coll_results = p_coll_results.groupby([
     'N',
     'cw_min',
-    'cw_max',
-    'p_coll_model'
+    'cw_max'
     ])['p_coll_simulation'].mean().reset_index(name='p_coll_simulation')
 
-#merging matlab results
-final_p_coll_results = final_p_coll_results.merge(p_coll_matlab, on='N')
-
-# throughput validation
+#throughput results
 throughput_results = pd.DataFrame(np.delete(simulation_results, -2, axis=1), columns=[
     'run',
     'N',
@@ -82,8 +64,9 @@ throughput_results = throughput_results.groupby([
     'cw_max'
 ])['throughput_simulation'].mean().reset_index(name='throughput_simulation')
 
-#merging throughput to the final results
-final_results = final_p_coll_results.merge(throughput_results, on=['N', 'cw_min', 'cw_max'])
+#converting the throughput into Mbits/s
+throughput_results['throughput_simulation'] = throughput_results['throughput_simulation'].div(1e6).round(4)
 
-#saving results as csv file
-final_results.to_csv(f'results/final_results_{cw_min}_{cw_max}_{retry}.csv')
+#merging averege results of throughput and p_coll and saving as simulation results
+dcf_simulation_results = pd.merge(p_coll_results, throughput_results, on=['N', 'cw_min', 'cw_max'])
+dcf_simulation_results.to_csv(f'results/simulation_results_{cw_min}_{cw_max}_{retry}.csv', index=False)
