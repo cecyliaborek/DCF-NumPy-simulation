@@ -61,6 +61,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate = 54, control_rate = 6, ma
                     cw[tx] = cw_min + 1
                 #new backoff chosen for all the station that collided
                 backoffs[tx] = np.random.randint(low=0, high=cw[tx])
+        #calculation of round time in slots
         tx_time[round] = transmission_time(min_backoff, data_rate, control_rate, mac_payload)
 
     simulation_results = Results()
@@ -117,7 +118,6 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload):
     tx_time = difs + data_duration + sifs + ack_duration #s
     tx_time_slots = math.ceil(tx_time/slot_duration) + backoff_slots #slots
 
-    print(tx_time)
     return tx_time_slots
 
 
