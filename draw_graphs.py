@@ -62,9 +62,9 @@ plt.plot(
     final_results['thr_ns3'],
     'ro'
     )
-plt.title(f"mean throughput per station for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
+plt.title(f"throughput per station for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
 plt.xlabel('number of contending stations')
-plt.ylabel('mean throughput per station')
+plt.ylabel('throughput [Mb/s]')
 plt.legend(['simulation', 'ns3'])
 plt.figtext(0.6, 0.5, 'MSE ns3: %.4E' % Decimal(MSE_ns3_thr))
 plt.savefig(f'results/graphs/throughput_result_{cw_min}_{cw_max}_{retry}.png')

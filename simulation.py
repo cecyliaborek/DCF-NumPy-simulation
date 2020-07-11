@@ -18,7 +18,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate = 54, control_rate = 6, ma
         Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
     Returns:
-        Results: class that has two fields - mean per station throughput in b/s and mean per station
+        Results: class that has two fields - aggregate network throughput in b/s and mean per station
             probability of collision
     """
 
@@ -70,9 +70,9 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate = 54, control_rate = 6, ma
     collision_probability = collisions/(successful + collisions)
     simulation_results.mean_collision_probability = np.mean(collision_probability)
 
-    #calculation of throughput per station in b/s and mean value of it
+    #calculation of throughput per station in b/s and aggregate throughput of whole network
     throughput = successful * mac_payload * 8 / (np.sum(tx_time) * slot_time)
-    simulation_results.mean_throughput = np.mean(throughput)
+    simulation_results.network_throughput = np.sum(throughput)
 
     return simulation_results
 
@@ -125,4 +125,4 @@ class Results:
 
     def __init__(self):
         self.mean_collision_probability = 0
-        self.mean_throughput = 0
+        self.network_throughput = 0
