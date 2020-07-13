@@ -1,0 +1,2 @@
+- aggregate throughput: 29.9311 Mbit/s
+- average collision probability: 3.93391e-05
