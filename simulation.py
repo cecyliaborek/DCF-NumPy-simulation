@@ -23,7 +23,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate = 54, control_rate = 6, ma
     """
 
     simulation_rounds  = 10000
-    retry_limit = 4
+    retry_limit = 7
     slot_time = 9e-6 #s
 
     successful = np.zeros(N) # successful transmissions per station
