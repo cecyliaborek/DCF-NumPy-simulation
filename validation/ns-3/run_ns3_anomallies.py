@@ -30,4 +30,4 @@ ns3_results_dt = pd.DataFrame(ns3_results, columns=[
     'p_coll_ns3'
 ])
 
-ns3_results_dt.to_csv('./validation/ns3_raw_anomallies.csv')
+ns3_results_dt.to_csv('./ns3_raw_anomallies.csv')

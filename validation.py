@@ -25,7 +25,7 @@ matlab_results = pd.read_csv('validation/results_matlab_ready.csv')
 matlab_p_coll = matlab_results[['N', 'p_coll_matlab']]
 
 #adding results from ns3 simulator
-ns3_results = pd.read_csv('validation/ns3_results.csv', index_col=False)
+ns3_results = pd.read_csv('validation/ns-3/ns3_results.csv', index_col=False)
 ns3_results = ns3_results[['N', 'p_coll_ns3', 'thr_ns3']]
 
 #merging the simulation, model, matlab and ns3 results

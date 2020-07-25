@@ -31,11 +31,11 @@ ns3_results_dt = pd.DataFrame(ns3_results, columns=[
     'p_coll_ns3'
 ])
 
-ns3_results_dt.to_csv('./validation/ns3_raw.csv')
+ns3_results_dt.to_csv('./ns3_raw.csv')
 
 mean_ns3_results = ns3_results_dt.groupby(
     'N')[['thr_ns3', 'p_coll_ns3']].mean()
 mean_ns3_results.columns = ['thr_ns3', 'p_coll_ns3']
 mean_ns3_results = mean_ns3_results.reset_index()
 
-mean_ns3_results.to_csv('./validation/ns3_results.csv', index=False)
+mean_ns3_results.to_csv('./ns3_results.csv', index=False)
