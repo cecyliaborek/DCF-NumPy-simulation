@@ -63,6 +63,7 @@ plt.plot(
 plt.title(f"Throughput per station for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
 plt.xlabel('Number of contending stations')
 plt.ylabel('Throughput [Mb/s]')
+plt.ylim(ymin=0, ymax=32)
 plt.legend(['DCF-NumPy', 'ns-3'])
-plt.figtext(0.15, 0.15, 'MSE: %.4E' % Decimal(MSE_ns3_thr))
+plt.figtext(0.15, 0.25, 'MSE: %.4E' % Decimal(MSE_ns3_thr))
 plt.savefig(f'results/graphs/throughput_result_{cw_min}_{cw_max}_{retry}.png')
