@@ -6,7 +6,7 @@
 /validation/Walidacja wyników.xlsx
 /resources/*
 test_times.py
-
+confidence-intervals.py
 
 ### Code ###
 .vscode/*
