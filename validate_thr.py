@@ -12,8 +12,8 @@ runs = [i + 1 for i in range(10)]
 
 # running dcf NumPy simulation to get results for given parameters
 dcf_numpy_thr = dcf_simulation(
-    N=N, cw_min=cw_min, cw_max=cw_max, seed=1).network_throughput
-#convertinh into Mbps
+    N=N, cw_min=cw_min, cw_max=cw_max, seed=1, mac_payload=1472).network_throughput
+# convertinh into Mbps
 dcf_numpy_thr = dcf_numpy_thr/(1e6)
 
 # running ns-3 simulation to get results for given parameter
@@ -30,12 +30,22 @@ matlab_thr = 34.601371204701266
 
 results = (dcf_numpy_thr, ns3_thr, matlab_thr)
 
-#throughput bar graph
+# throughput bar graph
 y_pos = np.arange(len(results))
 labels = ('Dcf NumPy', 'Ns-3', 'Matlab 802_11_a.m')
 
-plt.bar(y_pos, results, align='center')
+fig, ax = plt.subplots()
+
+rects = plt.bar(y_pos, results, align='center')
 plt.xticks(y_pos, labels)
 plt.ylabel('Throughput [Mbps]')
 plt.title(f'Throuhput comparison for CWmin={cw_min}, CWmax={cw_max}, N={N}')
+
+# dispalying values for each bar
+for rect, value in zip(rects, results):
+    height = rect.get_height()
+    ax.text(rect.get_x() + rect.get_width()/2., height,
+            '%.4f' % value,
+            ha='center', va='bottom')
+
 plt.savefig('results/graphs/thr_comparision.png')
