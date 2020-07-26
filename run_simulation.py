@@ -1,7 +1,7 @@
 from simulation import dcf_simulation
 import pandas as pd
 import numpy as np
-
+import scipy.stats as st
 
 # configuration data for simulation
 N = 10 #number of contending stations
@@ -57,12 +57,22 @@ throughput_results = pd.DataFrame(np.delete(simulation_results, -2, axis=1), col
     'throughput_simulation'
 ])
 
+#calculating the confidence intervals
+alpha=0.05
+std = throughput_results.groupby('N').std().loc[:, 'throughput_simulation']
+n = throughput_results.groupby('N').count().loc[:, 'throughput_simulation']
+#confidence intervals in Mb/s
+yerr = (std / np.sqrt(n) * st.t.ppf(1-alpha/2, n - 1))/1e6
+
 #grouping the results with the same N and calculating mean throughput for each N
 throughput_results = throughput_results.groupby([
     'N',
     'cw_min',
     'cw_max'
 ])['throughput_simulation'].mean().reset_index(name='throughput_simulation')
+
+#adding the confidence intervals as a column
+throughput_results['thr_conf_intervals'] = yerr
 
 #converting the throughput into Mbits/s
 throughput_results['throughput_simulation'] = throughput_results['throughput_simulation'].div(1e6).round(4)
