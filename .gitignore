@@ -5,6 +5,7 @@
 ### my files to exclude ###
 /validation/Walidacja wyników.xlsx
 /resources/*
+test_times.py
 
 
 ### Code ###
