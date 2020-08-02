@@ -57,8 +57,8 @@ throughput_results = pd.DataFrame(np.delete(simulation_results, -2, axis=1), col
     'throughput_simulation'
 ])
 
-#calculating the confidence intervals
-yerr = conf_intervals.confidence_intervals(throughput_results, 'throughput_simulation')
+#calculating the confidence intervals and converting them to Mbps
+yerr = conf_intervals.confidence_intervals(throughput_results, 'throughput_simulation')/10e6
 
 #grouping the results with the same N and calculating mean throughput for each N
 throughput_results = throughput_results.groupby([
