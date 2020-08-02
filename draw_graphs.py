@@ -58,14 +58,15 @@ MSE_ns3_thr = np.square(np.subtract(
     final_results['throughput_simulation'], final_results['thr_ns3'])).mean()
 
 thr_sim = final_results['throughput_simulation']
-thr_conf = final_results['thr_conf_intervals']
+sim_conf_intervals = final_results['thr_conf_intervals']
 n = final_results['N']
 thr_ns3 = final_results['thr_ns3']
+ns3_conf_intervals = final_results['ns3_conf_intervals']
 
 fig = plt.figure()
-plt.errorbar(x=n, y=thr_sim, yerr=thr_conf, capsize=6, marker='s',
+plt.errorbar(x=n, y=thr_sim, yerr=sim_conf_intervals, capsize=6, marker='s',
              markersize=5, linestyle='dashed', color='b', mfc='b', mec='b')
-plt.errorbar(x=n, y=thr_ns3,yerr=thr_conf, capsize=6, marker='s',
+plt.errorbar(x=n, y=thr_ns3, yerr=ns3_conf_intervals, capsize=6, marker='s',
              markersize=5, linestyle='dashed', color='g', mfc='g', mec='g')
 plt.title(
     f"Throughput per station for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
