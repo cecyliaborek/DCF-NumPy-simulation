@@ -135,7 +135,10 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, colli
     # adding sifs and ack duration only if the transmission was successful
     if not collision:
         tx_time += sifs + ack_duration  # s
-
+    # adding ack timeout (2*sifs) in case of collision
+    else:
+        tx_time += 2*sifs # s
+        
     tx_time_slots = math.ceil(tx_time/slot_duration) + backoff_slots  # slots
 
     return tx_time_slots
