@@ -23,26 +23,28 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
             probability of collision
     """
 
-    simulation_rounds = 10000
+    contention_rounds = 10000
     retry_limit = 7
     slot_time = 9e-6  # s
 
     successful = np.zeros(N)  # successful transmissions per station
     collisions = np.zeros(N)  # collisions per station
-    retransmissions = np.zeros(N)  # counter of
-    # table of current CW for each station, changed after collisions
+    retransmissions = np.zeros(N)  # counter of retransmissions per station
+    
     cw = np.ones(N) * (cw_min + 1)
+    # table of current CW for each station, changed after collisions
     # and reset back to cw_min on success, contains upper excluded
     # limits, i.e. 16, 32,..., 1024
 
-    tx_time = np.zeros(simulation_rounds)  # times of all contention rounds
+    tx_time = np.zeros(contention_rounds)  # times of all contention rounds
     throughput = np.zeros(N)  # throughput per station
 
     np.random.seed(seed)  # setting the seed of PRN generator
+
     # random backoff for each station
     backoffs = np.random.randint(low=0, high=cw_min+1, size=N)
 
-    for round in range(simulation_rounds):
+    for round in range(contention_rounds):
         # variable determining if collision occured or not, necessary for transmission time calculation
         collision = False
         min_backoff = np.amin(backoffs)  # finding the minimal value of backoff
