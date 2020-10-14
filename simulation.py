@@ -30,7 +30,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
     successful = np.zeros(N)  # successful transmissions per station
     collisions = np.zeros(N)  # collisions per station
     retransmissions = np.zeros(N)  # counter of retransmissions per station
-    
+
     cw = np.ones(N) * (cw_min + 1)
     # table of current CW for each station, changed after collisions
     # and reset back to cw_min on success, contains upper excluded
@@ -45,12 +45,13 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
     backoffs = np.random.randint(low=0, high=cw_min+1, size=N)
 
     for round in range(contention_rounds):
-        # variable determining if collision occured or not, necessary for transmission time calculation
-        collision = False
-        min_backoff = np.amin(backoffs)  # finding the minimal value of backoff
-        next_tx = np.where(backoffs == min_backoff)[0]
-        # subtracting from all stations' backoffs, time they've already waited
-        backoffs = backoffs - min_backoff - 1
+        collision = False  # variable determining if collision occured or not,
+        # necessary for transmission time calculation
+        min_backoff = np.amin(backoffs)  # find the minimal value of backoff
+        next_tx = np.where(backoffs == min_backoff)[0]  # an array of index(es)
+        # of station(s) with lowest backoff(s)
+        backoffs = backoffs - min_backoff - 1  # subtract from all stations' backoffs,
+        # time they've already waited
         if len(next_tx) == 1:  # only one station had smallest backoff - success
             successful[next_tx] += 1
             retransmissions[next_tx] = 0
@@ -137,8 +138,8 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, colli
         tx_time += sifs + ack_duration  # s
     # adding ack timeout (2*sifs) in case of collision
     else:
-        tx_time += 2*sifs # s
-        
+        tx_time += 2*sifs  # s
+
     tx_time_slots = math.ceil(tx_time/slot_duration) + backoff_slots  # slots
 
     return tx_time_slots
