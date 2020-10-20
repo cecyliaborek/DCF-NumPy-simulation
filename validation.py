@@ -16,7 +16,7 @@ else:
 simulation_results = pd.read_csv(f'results/simulation_results_{cw_min}_{cw_max}_{retry}.csv', index_col=False)
 
 # extracting probability of collision from results of model calculation
-model_results = pd.read_csv(f'validation/results_validation_{cw_min}_{cw_max}.csv')
+model_results = pd.read_csv(f'validation/results_model_{cw_min}_{cw_max}.csv')
 model_p_coll = model_results[['N', 'p_coll']]
 model_p_coll.columns = ['N', 'p_coll_model']
 
