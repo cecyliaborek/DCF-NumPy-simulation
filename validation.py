@@ -21,16 +21,16 @@ model_p_coll = model_results[['N', 'p_coll']]
 model_p_coll.columns = ['N', 'p_coll_model']
 
 #extracting probability of collision from results of matlab wifi_nr_model simulation
-matlab_results = pd.read_csv('validation/results_matlab_ready.csv')
-matlab_p_coll = matlab_results[['N', 'p_coll_matlab']]
+wifi_nr_results = pd.read_csv('validation/results_wifi_nr_ready.csv')
+wifi_nr_p_coll = wifi_nr_results[['N', 'p_coll_wifi_nr']]
 
 #adding results from ns3 simulator
 ns3_results = pd.read_csv('validation/ns-3/ns3_results.csv', index_col=False)
 ns3_results = ns3_results[['N', 'p_coll_ns3', 'thr_ns3', 'ns3_conf_intervals']]
 
-#merging the simulation, model, matlab and ns3 results
+#merging the simulation, model, wifi_nr and ns3 results
 final_results = simulation_results.merge(model_p_coll, on='N')
-final_results = final_results.merge(matlab_p_coll, on='N')
+final_results = final_results.merge(wifi_nr_p_coll, on='N')
 final_results = final_results.merge(ns3_results, on='N')
 
 #saving results as csv file
