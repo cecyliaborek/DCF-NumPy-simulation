@@ -15,7 +15,7 @@ dcf_numpy_time = transmission_time(backoff_slots=0, data_rate=data_rate,
 # matlab IEEE_802_11_a simulation tx time:
 matlab_802_11_time = 0.000340333333333333
 # AirTime calculator tx time (returns results in microseconds):
-air_time_calc_time = 347.2e-6
+air_time_calc_time = 342e-6
 
 print(dcf_numpy_time)
 print(air_time_calc_time)
