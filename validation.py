@@ -28,10 +28,15 @@ wifi_nr_p_coll = wifi_nr_results[['N', 'p_coll_wifi_nr']]
 ns3_results = pd.read_csv('validation/ns-3/ns3_results.csv', index_col=False)
 ns3_results = ns3_results[['N', 'p_coll_ns3', 'thr_ns3', 'ns3_conf_intervals']]
 
+#adding results from ns3 release 32
+ns3_results_r32 = pd.read_csv('validation/ns-3/ns3_results_r32.csv', index_col=False)
+ns3_results_r32 = ns3_results_r32[['N', 'p_coll_ns3_r32', 'thr_ns3_r32', 'ns3_conf_intervals_r32']]
+
 #merging the simulation, model, wifi_nr and ns3 results
 final_results = simulation_results.merge(model_p_coll, on='N')
 final_results = final_results.merge(wifi_nr_p_coll, on='N')
 final_results = final_results.merge(ns3_results, on='N')
+final_results = final_results.merge(ns3_results_r32, on='N')
 
 #saving results as csv file
 final_results.to_csv(f'results/final_results_{cw_min}_{cw_max}_{retry}.csv', index=False)
