@@ -2,6 +2,8 @@ import subprocess
 import pandas as pd
 import os
 
+dir_path = os.path.dirname(os.path.realpath(
+    __file__))  # directory of this script
 
 # same data as for DCF-NumPy simulation
 N = 10
@@ -15,7 +17,7 @@ for n in no_stations:
     for r in runs:
         print(n, r)
         stream = subprocess.check_output(
-            f'cd ~/ns-allinone-3.31/ns-3.31/ && ./waf --run "scratch/80211a-performance --RngRun={r} --simulationTime=100 --nWifi={n}" | tail -n 2',
+            f'cd ~/ns-allinone-3.31/ns-3.31/ && ./waf --run "scratch/80211a-performance --RngRun={r} --simulationTime=10 --nWifi={n}" | tail -n 2',
             shell=True
         )
 
@@ -33,5 +35,5 @@ ns3_results_dt = pd.DataFrame(ns3_results, columns=[
     'p_coll_ns3'
 ])
 
-ns3_results_dt.to_csv('ns3_raw.csv')
+ns3_results_dt.to_csv(f'{dir_path}/ns3_raw.csv')
 
