@@ -87,3 +87,23 @@ plt.ylim(ymin=0, ymax=32)
 plt.tight_layout()
 
 plt.savefig(f'results/graphs/throughput_result_{cw_min}_{cw_max}_{retry}.pdf')
+
+
+# throughput vs packet size graph
+
+thr_vs_packet = pd.read_csv('results/thr_vs_payload.csv')
+
+plt.figure()
+plt.plot(
+    thr_vs_packet['payload'],
+    thr_vs_packet['DCF-NumPy_thr'],
+    'bo--',
+    thr_vs_packet['payload'],
+    thr_vs_packet['thr_ns3'],
+    'co--'
+)
+
+plt.xlabel('MAC Payload')
+plt.ylabel('Throughput')
+plt.legend(['DCF-NumPy', 'Ns-3'])
+plt.savefig(f'results/graphs/thr_vs_packet.pdf')
