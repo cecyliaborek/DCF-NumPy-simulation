@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 data_rate = 54
 control_rate = 6
-mac_payload = 1472
+mac_payload = 1500
 slot_time = 9e-6
 
 # DCF-NumPy simulation tx time: transmission_time() * slot_time as transmission_time() returns number of slots
@@ -16,14 +16,16 @@ dcf_numpy_time = transmission_time(backoff_slots=0, data_rate=data_rate,
 matlab_802_11_time = 0.000340333333333333
 # AirTime calculator tx time (returns results in microseconds):
 air_time_calc_time = 342e-6
+#ns-3 frame duration
+ns3_time = 0.000379
 
 print(dcf_numpy_time)
 print(air_time_calc_time)
 
-air_times = (dcf_numpy_time, matlab_802_11_time, air_time_calc_time)
+air_times = (dcf_numpy_time, matlab_802_11_time, air_time_calc_time, ns3_time)
 
 y_pos = np.arange(len(air_times))
-labels = ('IEEE_802_11_a', 'Dcf-NumPy', 'AirTime Calculator')
+labels = ('IEEE_802_11_a', 'Dcf-NumPy', 'AirTime Calculator', 'ns-3')
 
 fig, ax = plt.subplots()
 
