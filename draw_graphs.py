@@ -35,13 +35,21 @@ plt.plot(
     'ro--',
     final_results['N'],
     final_results['p_coll_wifi_nr'],
-    'yo--',
-    final_results['N'],
-    final_results['p_coll_ns3'],
-    'co--'
+    'yo--'
+)
+plt.errorbar(
+    x=final_results['N'],
+    y=final_results['p_coll_ns3'],
+    yerr=final_results['ns3_p_coll_intervals'],
+    capsize=6, marker='s',
+    markersize=5,
+    linestyle='dashed',
+    color='c',
+    mfc='c',
+    mec='c'
 )
 
-#plt.title(
+# plt.title(
 #    f"Mean probability of collision for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
 plt.xlabel('Number of Contending Stations')
 plt.ylabel('Probability of Collision')
@@ -61,14 +69,14 @@ thr_sim = final_results['throughput_simulation']
 sim_conf_intervals = final_results['thr_conf_intervals']
 n = final_results['N']
 thr_ns3 = final_results['thr_ns3']
-ns3_conf_intervals = final_results['ns3_conf_intervals']
+ns3_conf_intervals = final_results['ns3_thr_intervals']
 
 fig = plt.figure()
 plt.errorbar(x=n, y=thr_sim, yerr=sim_conf_intervals, capsize=6, marker='s',
              markersize=5, linestyle='dashed', color='b', mfc='b', mec='b')
 plt.errorbar(x=n, y=thr_ns3, yerr=ns3_conf_intervals, capsize=6, marker='s',
              markersize=5, linestyle='dashed', color='g', mfc='g', mec='g')
-#plt.title(
+# plt.title(
 #    f"Throughput per station for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
 plt.xlabel('Number of Contending Stations')
 plt.ylabel('Throughput [Mb/s]')
