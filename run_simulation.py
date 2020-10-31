@@ -24,7 +24,7 @@ simulation_results = []
 for n in no_stations:
     for r in runs:
         current_run = [r, n, cw_min, cw_max]
-        run_results = dcf_simulation(N=n, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=1472)
+        run_results = dcf_simulation(N=n, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=1500)
         current_run.extend([
             run_results.mean_collision_probability,
             run_results.network_throughput])
