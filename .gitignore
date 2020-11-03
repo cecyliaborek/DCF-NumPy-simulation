@@ -9,6 +9,7 @@ test_times.py
 confidence-intervals.py
 /validation/ns-3/test_ns3.py
 /latex
+*.pdf
 
 ### Code ###
 .vscode/*
