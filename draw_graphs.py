@@ -103,7 +103,7 @@ plt.plot(
     'co--'
 )
 
-plt.xlabel('MAC Payload [B]')
-plt.ylabel('Throughput [Mb/s]')
+plt.xlabel('MAC Payload')
+plt.ylabel('Throughput')
 plt.legend(['DCF-NumPy', 'Ns-3'])
 plt.savefig(f'results/graphs/thr_vs_packet.pdf')
