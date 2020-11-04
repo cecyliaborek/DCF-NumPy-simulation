@@ -73,7 +73,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
                 backoffs[tx] = np.random.randint(low=0, high=cw[tx])
         # calculation of round time in slots
         tx_time[round] = transmission_time(
-            min_backoff, data_rate, control_rate, mac_payload, collision)
+            min_backoff, data_rate, control_rate, mac_payload, collision)['tx_time']
 
     simulation_results = Results()
 
@@ -100,12 +100,14 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, colli
         collision (Bool): boolean value indicating if collision, in given round, occured or not;
             True if there was a collision, False otherwise
     Returns:
-        int: time of single round of contention in slots
+        results (str:int): dictionary with duration of contention round and duration of mac frame
     """
 
     # dictionary: (data rate, bits per symbol)
     bits_per_symbol = dict([(6, 48), (9, 48), (12, 96),
                             (18, 96), (24, 192), (36, 192), (48, 288), (54, 288)])
+
+    results = {}
 
     slot_duration = 9e-6  # s
     sifs = 16e-6  # s
@@ -142,7 +144,10 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, colli
 
     tx_time_slots = math.ceil(tx_time/slot_duration) + backoff_slots  # slots
 
-    return tx_time_slots
+    results['tx_time'] = tx_time_slots
+    results['frame_time'] = data_duration
+
+    return results
 
 
 class Results:
