@@ -2,6 +2,8 @@ import subprocess
 import pandas as pd
 import os
 
+dir_path = os.path.dirname(os.path.realpath(
+    __file__))  # directory of this script
 
 # same data as for DCF-NumPy simulation
 N = 10
@@ -33,5 +35,5 @@ ns3_results_dt = pd.DataFrame(ns3_results, columns=[
     'p_coll_ns3'
 ])
 
-ns3_results_dt.to_csv('ns3_raw.csv')
+ns3_results_dt.to_csv(f'{dir_path}/ns3_raw.csv')
 
