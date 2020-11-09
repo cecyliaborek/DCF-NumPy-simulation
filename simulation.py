@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 
-def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_payload=2304):
+def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_payload=2304, debug=False):
     """Simulates DCF function as method of multiple access in 802.11 network
     and returns mean probability of colliosion per station
 
@@ -83,8 +83,15 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
         collision_probability)
 
     # calculation of throughput per station in b/s and aggregate throughput of whole network
-    throughput = successful * mac_payload * 8 / (np.sum(tx_time) * slot_time)
+    simulation_time = np.sum(tx_time) * slot_time
+    throughput = successful * mac_payload * 8 / (simulation_time)
     simulation_results.network_throughput = np.sum(throughput)
+
+    # debug info
+    debug_info = (np.sum(successful), np.sum(collisions), simulation_time)
+
+    if(debug):
+        return simulation_results, debug_info
 
     return simulation_results
 
