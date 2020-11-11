@@ -1,7 +1,7 @@
 import pandas as pd
 
-dcf_numpy_dt = pd.read_csv('results/thr_vs_payload/dcf_numpy.csv')
-ns3_results_dt = pd.read_csv('results/thr_vs_payload/ns3.csv')
+dcf_numpy_dt = pd.read_csv('thr_vs_payload/dcf_numpy.csv')
+ns3_results_dt = pd.read_csv('thr_vs_payload/ns3.csv')
 
 #selecting results for payload lower than 2300 (from this value fragemntation is done)
 ns3_results_dt = ns3_results_dt.loc[ns3_results_dt['payload'] < 2300]

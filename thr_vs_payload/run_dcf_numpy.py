@@ -17,7 +17,7 @@ for paylaod in mac_paylaods:
     for r in runs:
         current_run = [r, paylaod]
         run_results = dcf_simulation(
-            N=N, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=paylaod)
+            N=N, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=paylaod, control_rate=24, data_rate=54)
         current_run.append(run_results.network_throughput)
         dcf_numpy_results.append(current_run)
 
@@ -28,4 +28,4 @@ dcf_numpy_dt = pd.DataFrame(dcf_numpy_results, columns=[
 dcf_numpy_dt = dcf_numpy_dt.groupby(
     'payload')['DCF-NumPy_thr'].mean().reset_index(name='DCF-NumPy_thr')
 
-dcf_numpy_dt.to_csv('results/thr_vs_payload/dcf_numpy.csv', index=False)
+dcf_numpy_dt.to_csv('thr_vs_payload/dcf_numpy.csv', index=False)
