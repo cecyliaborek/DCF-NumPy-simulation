@@ -53,11 +53,11 @@ plt.errorbar(
 #    f"Mean probability of collision for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
 plt.xlabel('Number of Contending Stations')
 plt.ylabel('Probability of Collision')
-plt.legend(['DCF-NumPy', 'Analytical Model', 'Wifi_NR Simulation', 'Ns-3'])
-plt.figtext(0.55, 0.3, 'MSE:')
-plt.figtext(0.55, 0.25, '* Analytical Model: %.4E' % Decimal(MSE_model))
-plt.figtext(0.55, 0.2, '* Wifi_NR: %.4E' % Decimal(MSE_matlab))
-plt.figtext(0.55, 0.15, '* Ns-3: %.4E' % Decimal(MSE_ns3))
+plt.legend(['DCF-NumPy', 'Analytical Model', 'Coexistance Model', 'ns-3'])
+plt.figtext(0.50, 0.3, 'MSE:')
+plt.figtext(0.50, 0.25, '* Analytical Model: %.4E' % Decimal(MSE_model))
+plt.figtext(0.50, 0.2, '* Coexistance Model: %.4E' % Decimal(MSE_matlab))
+plt.figtext(0.50, 0.15, '* ns-3: %.4E' % Decimal(MSE_ns3))
 plt.savefig(f'results/graphs/p_coll_result_{cw_min}_{cw_max}_{retry}.pdf')
 
 # throughput graph
@@ -75,12 +75,12 @@ fig = plt.figure()
 plt.errorbar(x=n, y=thr_sim, yerr=sim_conf_intervals, capsize=6, marker='s',
              markersize=5, linestyle='dashed', color='b', mfc='b', mec='b')
 plt.errorbar(x=n, y=thr_ns3, yerr=ns3_conf_intervals, capsize=6, marker='s',
-             markersize=5, linestyle='dashed', color='g', mfc='g', mec='g')
+             markersize=5, linestyle='dashed', color='c', mfc='c', mec='c')
 # plt.title(
 #    f"Throughput per station for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
 plt.xlabel('Number of Contending Stations')
 plt.ylabel('Throughput [Mb/s]')
-legend = plt.legend(['DCF-NumPy', 'Ns-3'])
+legend = plt.legend(['DCF-NumPy', 'ns-3'])
 
 plt.text(0.7, 6, 'MSE: %.4E' % Decimal(MSE_ns3_thr))
 plt.ylim(ymin=0, ymax=32)
@@ -105,5 +105,24 @@ plt.plot(
 
 plt.xlabel('MAC Payload [B]')
 plt.ylabel('Throughput [Mb/s]')
-plt.legend(['DCF-NumPy', 'Ns-3'])
+plt.legend(['DCF-NumPy', 'ns-3'])
 plt.savefig(f'results/graphs/thr_vs_packet.pdf')
+
+# throughput vs mcs graph
+
+thr_vs_mcs = pd.read_csv('results/thr_vs_mcs.csv')
+
+plt.figure()
+plt.plot(
+    thr_vs_mcs['mcs'],
+    thr_vs_mcs['DCF-NumPy_thr'],
+    'bo--',
+    thr_vs_mcs['mcs'],
+    thr_vs_mcs['thr_ns3'],
+    'co--'
+)
+
+plt.xlabel('Modulation and coding scheme')
+plt.ylabel('Throughput [Mb/s]')
+plt.legend(['DCF-NumPy', 'ns-3'])
+plt.savefig(f'results/graphs/thr_vs_mcs.pdf')
