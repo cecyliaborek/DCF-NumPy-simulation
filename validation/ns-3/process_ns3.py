@@ -1,6 +1,6 @@
 import pandas as pd
 import delete_anomallies
-import conf_intervals
+from helpers import conf_intervals
 import os
 
 dir_path = os.path.dirname(os.path.realpath(
