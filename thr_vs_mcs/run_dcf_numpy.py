@@ -23,7 +23,7 @@ for mcs in mcs_values:
         current_run = [r, mcs]
         data_rate = msc_rate[mcs]
         run_results = dcf_simulation(
-            N=N, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=payload, data_rate=data_rate)
+            N=N, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=payload, data_rate=data_rate, control_rate=24)
         current_run.append(run_results.network_throughput)
         dcf_numpy_results.append(current_run)
 
