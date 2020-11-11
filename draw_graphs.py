@@ -82,8 +82,8 @@ plt.xlabel('Number of Contending Stations')
 plt.ylabel('Throughput [Mb/s]')
 legend = plt.legend(['DCF-NumPy', 'ns-3'])
 
-plt.text(0.7, 6, 'MSE: %.4E' % Decimal(MSE_ns3_thr))
-plt.ylim(ymin=0, ymax=32)
+plt.text(8, 1, 'MSE: %.4E' % Decimal(MSE_ns3_thr))
+plt.ylim(ymin=0, ymax=35)
 plt.tight_layout()
 
 plt.savefig(f'results/graphs/throughput_result_{cw_min}_{cw_max}_{retry}.pdf')
