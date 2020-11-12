@@ -30,7 +30,6 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
     successful = np.zeros(N)  # successful transmissions per station
     collisions = np.zeros(N)  # collisions per station
     retransmissions = np.zeros(N)  # counter of retransmissions per station
-
     cw = np.ones(N) * (cw_min + 1)
     # table of current CW for each station, changed after collisions
     # and reset back to cw_min on success, contains upper excluded
@@ -44,6 +43,9 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
     # random backoff for each station
     backoffs = np.random.randint(low=0, high=cw_min+1, size=N)
 
+    # initializing list of all backoff values throught the simulation
+    all_backoffs = backoffs
+
     for round in range(contention_rounds):
         collision = False  # variable determining if collision occured or not,
         # necessary for transmission time calculation
@@ -56,7 +58,10 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
             successful[next_tx] += 1
             retransmissions[next_tx] = 0
             cw[next_tx] = cw_min+1
+            # selecting new backoff for the stations
             backoffs[next_tx] = np.random.randint(low=0, high=cw[next_tx])
+            # appending the newly selected backoff to the array of all backoffs
+            all_backoffs = np.append(all_backoffs, backoffs[next_tx])
         else:  # more than one station with smallest backoff - collision
             collision = True  # collision set to True, necesarry for transmission time calculation
             for tx in next_tx:
@@ -71,6 +76,8 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
                     cw[tx] = cw_min + 1
                 # new backoff chosen for all the station that collided
                 backoffs[tx] = np.random.randint(low=0, high=cw[tx])
+                # appending the newly selected backoff to the array of all backoffs
+                all_backoffs = np.append(all_backoffs, backoffs[tx])
         # calculation of round time in slots
         tx_time[round] = transmission_time(
             min_backoff, data_rate, control_rate, mac_payload, collision)['tx_time']
@@ -93,7 +100,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
     if(debug):
         return simulation_results, debug_info
 
-    return simulation_results
+    return simulation_results, all_backoffs
 
 
 def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, collision):

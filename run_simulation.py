@@ -1,7 +1,7 @@
 from simulation import dcf_simulation
 import pandas as pd
 import numpy as np
-import conf_intervals
+import helpers.conf_intervals
 
 # configuration data for simulation
 N = 10 #number of contending stations
@@ -24,7 +24,7 @@ simulation_results = []
 for n in no_stations:
     for r in runs:
         current_run = [r, n, cw_min, cw_max]
-        run_results = dcf_simulation(N=n, cw_min=cw_min, cw_max=cw_max, seed=r, data_rate=54, control_rate=24, mac_payload=1500)
+        run_results,_ = dcf_simulation(N=n, cw_min=cw_min, cw_max=cw_max, seed=r, data_rate=54, control_rate=24, mac_payload=1500)
         current_run.extend([
             run_results.mean_collision_probability,
             run_results.network_throughput])
