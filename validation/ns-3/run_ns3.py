@@ -17,7 +17,7 @@ for n in no_stations:
     for r in runs:
         print(n, r)
         stream = subprocess.check_output(
-            f'cd ~/ns-allinone-3.31/ns-3.31/ && ./waf --run "scratch/80211a-performance --RngRun={r} --simulationTime=100 --nWifi={n}" | tail -n 2',
+            f'cd ~/ns-allinone-3.31/ns-3.31/ && ./waf --run "scratch/80211a-performance --RngRun={r} --simulationTime=100 --nWifi={n}" | tail -n 3 | head -n 2',
             shell=True
         )
 
