@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 
-def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_payload=2304, debug=False):
+def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_payload=1500, debug=False):
     """Simulates DCF function as method of multiple access in 802.11 network
     and returns mean probability of colliosion per station
 
@@ -14,7 +14,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_pa
         data_rate (int): rate at which data is transmitted in Mb/s (one of the defined in 802.11a standard),
             default 54 Mb/s
         control_rate (int): rate at which control data is transmitted in Mb/s, default 6 Mb/s
-        mac_payload (int): payload of MAC frame in B, maximally 2304B, default 2304Bs
+        mac_payload (int): payload of MAC frame in B, maximally 2304B, default 1500B
 
         Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
