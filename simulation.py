@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 
-def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=6, mac_payload=1500, debug=False):
+def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=24, mac_payload=1500, debug=False):
     """Simulates DCF function as method of multiple access in 802.11 network
     and returns mean probability of colliosion per station
 
