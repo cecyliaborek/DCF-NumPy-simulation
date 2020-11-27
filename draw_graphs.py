@@ -125,3 +125,23 @@ plt.xlabel('Modulation and coding scheme')
 plt.ylabel('Throughput [Mb/s]')
 plt.legend(['DCF-NumPy', 'ns-3'])
 plt.savefig(f'results/graphs/thr_vs_mcs.pdf')
+
+
+# backoff optimization
+optimization_throughput = pd.read_csv('results/backoff_optimization_n16.csv')
+cw_values = optimization_throughput['cw']
+
+plt.figure()
+plt.plot(
+    cw_values,
+    optimization_throughput['throughput'],
+    'bo--',
+    cw_values,
+    optimization_throughput['default_thr'],
+    'r--')
+
+plt.xlabel('CW values')
+plt.ylabel('Throughput [Mb/s]')
+#plt.legend('')
+
+plt.savefig(f'results/graphs/backoff_optimization.pdf')
