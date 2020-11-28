@@ -130,15 +130,14 @@ plt.savefig(f'results/graphs/thr_vs_mcs.pdf')
 # backoff optimization
 optimization_throughput = pd.read_csv('results/backoff_optimization_n16.csv')
 cw_values = optimization_throughput['cw']
+default_thr = optimization_throughput['default_thr'][1]
 
 plt.figure()
 plt.plot(
     cw_values,
     optimization_throughput['throughput'],
-    'bo--',
-    cw_values,
-    optimization_throughput['default_thr'],
-    'r--')
+    'bo--')
+plt.axhline(y=default_thr, color='r', linestyle='--')
 
 plt.xlabel('CW values')
 plt.ylabel('Throughput [Mb/s]')
