@@ -1,7 +1,13 @@
 from simulation import dcf_simulation
 import pandas as pd
 import numpy as np
-import helpers.conf_intervals
+import sys
+
+sys.path.append('/home/cecylia/Documents/studies/thesis/helpers')
+
+from helpers import conf_intervals
+
+
 
 # configuration data for simulation
 N = 10 #number of contending stations
@@ -58,7 +64,7 @@ throughput_results = pd.DataFrame(np.delete(simulation_results, -2, axis=1), col
 ])
 
 #calculating the confidence intervals and converting them to Mbps
-yerr = conf_intervals.confidence_intervals(throughput_results, 'throughput_simulation')/10e6
+yerr = conf_intervals.confidence_intervals(throughput_results, 'throughput_simulation', 'N')/10e6
 
 #grouping the results with the same N and calculating mean throughput for each N
 throughput_results = throughput_results.groupby([
@@ -68,10 +74,11 @@ throughput_results = throughput_results.groupby([
 ])['throughput_simulation'].mean().reset_index(name='throughput_simulation')
 
 #adding the confidence intervals as a column
-throughput_results['thr_conf_intervals'] = yerr
+throughput_results = throughput_results.merge(yerr, on='N', suffixes=('', '_conf'))
 
-#converting the throughput into Mbits/s
+#converting throughput into Mbits/s
 throughput_results['throughput_simulation'] = throughput_results['throughput_simulation'].div(1e6).round(4)
+throughput_results['throughput_simulation_conf'] = throughput_results['throughput_simulation_conf'].div(1e6).round(4)
 
 #merging averege results of throughput and p_coll and saving as simulation results
 dcf_simulation_results = pd.merge(p_coll_results, throughput_results, on=['N', 'cw_min', 'cw_max'])

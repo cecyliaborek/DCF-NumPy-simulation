@@ -66,7 +66,7 @@ MSE_ns3_thr = np.square(np.subtract(
     final_results['throughput_simulation'], final_results['thr_ns3'])).mean()
 
 thr_sim = final_results['throughput_simulation']
-sim_conf_intervals = final_results['thr_conf_intervals']
+sim_conf_intervals = final_results['throughput_simulation_conf']
 n = final_results['N']
 thr_ns3 = final_results['thr_ns3']
 ns3_conf_intervals = final_results['ns3_thr_intervals']
