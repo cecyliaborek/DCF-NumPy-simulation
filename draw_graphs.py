@@ -139,7 +139,7 @@ plt.plot(
     'bo--')
 plt.axhline(y=default_thr, color='r', linestyle='--')
 
-plt.xlabel('CW values')
+plt.xlabel('CW value')
 plt.ylabel('Throughput [Mb/s]')
 #plt.legend('')
 
