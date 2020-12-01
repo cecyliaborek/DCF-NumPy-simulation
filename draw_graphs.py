@@ -94,14 +94,18 @@ plt.savefig(f'results/graphs/throughput_result_{cw_min}_{cw_max}_{retry}.pdf')
 thr_vs_packet = pd.read_csv('results/thr_vs_payload.csv')
 
 plt.figure()
-plt.plot(
-    thr_vs_packet['payload'],
-    thr_vs_packet['DCF-NumPy_thr'],
-    'bo--',
-    thr_vs_packet['payload'],
-    thr_vs_packet['thr_ns3'],
-    'co--'
-)
+
+payload = thr_vs_packet['payload']
+thr_dcf_numpy = thr_vs_packet['DCF-NumPy_thr']
+conf_dcf_numpy = thr_vs_packet['DCF-NumPy_thr_conf']
+thr_ns3 = thr_vs_packet['thr_ns3']
+conf_thr_ns3 = thr_vs_packet['thr_ns3_conf']
+
+plt.errorbar(x=payload, y=thr_dcf_numpy, yerr=conf_dcf_numpy, capsize=6, marker='s',
+             markersize=5, linestyle='dashed', color='b', mfc='b', mec='b')
+
+plt.errorbar(x=payload, y=thr_ns3, yerr=conf_thr_ns3, capsize=6, marker='s',
+             markersize=5, linestyle='dashed', color='c', mfc='c', mec='c')
 
 plt.xlabel('MAC Payload [B]')
 plt.ylabel('Throughput [Mb/s]')

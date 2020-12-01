@@ -8,6 +8,8 @@ ns3_results_dt = ns3_results_dt.loc[ns3_results_dt['payload'] < 2300]
 
 # dividing thr from dcf by 1e6 to receive results in Mb/s
 dcf_numpy_dt['DCF-NumPy_thr'] = dcf_numpy_dt['DCF-NumPy_thr'].div(1e6)
+# dividing thr conf intervals from dcf by 1e6 to receive results in Mb/s
+dcf_numpy_dt['DCF-NumPy_thr_conf'] = dcf_numpy_dt['DCF-NumPy_thr_conf'].div(1e6)
 #selecting results for payload lower than 2300 (from this value fragemntation is done)
 dcf_numpy_dt = dcf_numpy_dt.loc[dcf_numpy_dt['payload'] < 2300]
 

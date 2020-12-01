@@ -23,9 +23,8 @@ for paylaod in mac_paylaods:
 
 dcf_numpy_results = np.array(dcf_numpy_results)
 
+# creating a pandas data frame from list
 dcf_numpy_dt = pd.DataFrame(dcf_numpy_results, columns=[
     'run', 'payload', 'DCF-NumPy_thr'])
-dcf_numpy_dt = dcf_numpy_dt.groupby(
-    'payload')['DCF-NumPy_thr'].mean().reset_index(name='DCF-NumPy_thr')
 
-dcf_numpy_dt.to_csv('thr_vs_payload/dcf_numpy.csv', index=False)
+dcf_numpy_dt.to_csv('thr_vs_payload/dcf_numpy_raw.csv', index=False)

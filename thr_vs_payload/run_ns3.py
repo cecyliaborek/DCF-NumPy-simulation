@@ -35,7 +35,4 @@ ns3_results_dt = pd.DataFrame(ns3_results, columns=[
     'thr_ns3'
 ])
 
-ns3_results_dt = ns3_results_dt.groupby(
-    'payload')['thr_ns3'].mean().reset_index(name='thr_ns3')
-
-ns3_results_dt.to_csv('results/thr_vs_payload/ns3.csv')
+ns3_results_dt.to_csv('thr_vs_payload/ns3_raw.csv')
