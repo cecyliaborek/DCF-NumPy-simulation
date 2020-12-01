@@ -15,12 +15,16 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=24, mac_p
             default 54 Mb/s
         control_rate (int): rate at which control data is transmitted in Mb/s, default 6 Mb/s
         mac_payload (int): payload of MAC frame in B, maximally 2304B, default 1500B
+        debug (bool): if set to true additional info returned (simulation time, number of successful and
+            unsuccessful transmission attemptss), default to false
 
         Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
     Returns:
         Results: class that has two fields - aggregate network throughput in b/s and mean per station
             probability of collision
+        all_backoffs: array with all backoff values selected throughout simulation
+        (debug_info): returned if debug set to true, tuple in the form of (successful, collisions, simulation time)
     """
 
     contention_rounds = 10000
