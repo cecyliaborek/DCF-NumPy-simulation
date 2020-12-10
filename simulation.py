@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 
-def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=24, mac_payload=1500, debug=False):
+def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=24, mac_payload=1500, debug=False, sim_time=100):
     """Simulates DCF function as method of multiple access in 802.11 network
     and returns mean probability of colliosion per station
 
@@ -17,6 +17,7 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=24, mac_p
         mac_payload (int): payload of MAC frame in B, maximally 2304B, default 1500B
         debug (bool): if set to true additional info returned (simulation time, number of successful and
             unsuccessful transmission attemptss), default to false
+        sim_time (float): simulation duration in seconds
 
         Values cw_min and cw_max should be the powers of 2 minus 1, i.e. 15, 31...1023
 
@@ -51,6 +52,8 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=24, mac_p
     all_backoffs = backoffs
 
     for round in range(contention_rounds):
+        if(np.sum(tx_time) >= sim_time / slot_time):
+            break
         collision = False  # variable determining if collision occured or not,
         # necessary for transmission time calculation
         min_backoff = np.amin(backoffs)  # find the minimal value of backoff
