@@ -84,7 +84,7 @@ throughput_results = throughput_results.merge(yerr, on='N', suffixes=('', '_conf
 
 #converting throughput into Mbits/s
 throughput_results['throughput_simulation'] = throughput_results['throughput_simulation'].div(1e6).round(4)
-throughput_results['throughput_simulation_conf'] = throughput_results['throughput_simulation_conf'].div(1e6).round(4)
+#throughput_results['throughput_simulation_conf'] = throughput_results['throughput_simulation_conf'].div(1e6).round(4)
 
 #merging averege results of throughput and p_coll and saving as simulation results
 dcf_simulation_results = pd.merge(p_coll_results, throughput_results, on=['N', 'cw_min', 'cw_max'])
