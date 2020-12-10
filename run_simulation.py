@@ -44,15 +44,21 @@ p_coll_results = pd.DataFrame(np.delete(simulation_results, -1, axis=1), columns
     'N',
     'cw_min',
     'cw_max',
-    'p_coll_simulation'
+    'p_coll_dcf_numpy'
 ])
+
+#calculating the confidence intervals
+yerr = conf_intervals.confidence_intervals(p_coll_results, 'p_coll_dcf_numpy', 'N')
 
 # grouping the results by the same value of N and calculating the mean of probability of collision for each N
 p_coll_results = p_coll_results.groupby([
     'N',
     'cw_min',
     'cw_max'
-    ])['p_coll_simulation'].mean().reset_index(name='p_coll_simulation')
+    ])['p_coll_dcf_numpy'].mean().reset_index(name='p_coll_dcf_numpy')
+
+p_coll_results = p_coll_results.merge(yerr, on='N', suffixes=('', '_conf'))
+
 
 #throughput results
 throughput_results = pd.DataFrame(np.delete(simulation_results, -2, axis=1), columns=[

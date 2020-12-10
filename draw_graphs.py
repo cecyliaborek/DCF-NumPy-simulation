@@ -19,23 +19,31 @@ final_results = pd.read_csv(
 # p_coll graph
 # calculation of MSE
 MSE_model = np.square(np.subtract(
-    final_results['p_coll_simulation'], final_results['p_coll_model'])).mean()
+    final_results['p_coll_dcf_numpy'], final_results['p_coll_model'])).mean()
 MSE_matlab = np.square(np.subtract(
-    final_results['p_coll_simulation'], final_results['p_coll_wifi_nr'])).mean()
+    final_results['p_coll_dcf_numpy'], final_results['p_coll_wifi_nr'])).mean()
 MSE_ns3 = np.square(np.subtract(
-    final_results['p_coll_simulation'], final_results['p_coll_ns3'])).mean()
+    final_results['p_coll_dcf_numpy'], final_results['p_coll_ns3'])).mean()
 
 plt.figure()
 plt.plot(
-    final_results['N'],
-    final_results['p_coll_simulation'],
-    'bo--',
     final_results['N'],
     final_results['p_coll_model'],
     'ro--',
     final_results['N'],
     final_results['p_coll_wifi_nr'],
     'yo--'
+)
+plt.errorbar(
+    x=final_results['N'],
+    y=final_results['p_coll_dcf_numpy'],
+    yerr=final_results['p_coll_dcf_numpy_conf'],
+    capsize=6, marker='s',
+    markersize=5,
+    linestyle='dashed',
+    color='b',
+    mfc='b',
+    mec='b'
 )
 plt.errorbar(
     x=final_results['N'],
@@ -53,7 +61,7 @@ plt.errorbar(
 #    f"Mean probability of collision for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
 plt.xlabel('Number of Contending Stations')
 plt.ylabel('Probability of Collision')
-plt.legend(['DCF-NumPy', 'Analytical Model', 'Coexistance Model', 'ns-3'])
+plt.legend(['Analytical Model', 'Coexistance Model','DCF-NumPy', 'ns-3'])
 plt.figtext(0.50, 0.3, 'MSE:')
 plt.figtext(0.50, 0.25, '* Analytical Model: %.4E' % Decimal(MSE_model))
 plt.figtext(0.50, 0.2, '* Coexistance Model: %.4E' % Decimal(MSE_matlab))
