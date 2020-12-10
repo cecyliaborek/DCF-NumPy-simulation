@@ -31,7 +31,5 @@ dcf_numpy_results = np.array(dcf_numpy_results)
 
 dcf_numpy_dt = pd.DataFrame(dcf_numpy_results, columns=[
     'run', 'mcs', 'DCF-NumPy_thr'])
-dcf_numpy_dt = dcf_numpy_dt.groupby(
-    'mcs')['DCF-NumPy_thr'].mean().reset_index(name='DCF-NumPy_thr')
 
-dcf_numpy_dt.to_csv('thr_vs_mcs/dcf_numpy.csv', index=False)
+dcf_numpy_dt.to_csv('thr_vs_mcs/dcf_numpy_raw.csv', index=False)

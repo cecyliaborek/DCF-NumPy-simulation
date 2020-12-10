@@ -36,7 +36,4 @@ ns3_results_dt = pd.DataFrame(ns3_results, columns=[
     'thr_ns3'
 ])
 
-ns3_results_dt = ns3_results_dt.groupby(
-    'mcs')['thr_ns3'].mean().reset_index(name='thr_ns3')
-
-ns3_results_dt.to_csv('thr_vs_mcs/ns3.csv')
+ns3_results_dt.to_csv('thr_vs_mcs/ns3_raw.csv')

@@ -122,8 +122,10 @@ x = thr_vs_mcs['mcs']
 
 ax = plt.subplot(111)
 offset = 0.3
-ax.bar(x - offset/2, thr_vs_mcs['DCF-NumPy_thr'], width=offset, color='b')
-ax.bar(x+offset/2, thr_vs_mcs['thr_ns3'], width=offset, color='c')
+ax.bar(x - offset/2, thr_vs_mcs['DCF-NumPy_thr'], width=offset,
+       color='b', yerr=thr_vs_mcs['DCF-NumPy_thr_conf'], capsize=4)
+ax.bar(x+offset/2, thr_vs_mcs['thr_ns3'], width=offset,
+       color='c', yerr=thr_vs_mcs['thr_ns3_conf'], capsize=4)
 
 plt.xlabel('Modulation and coding scheme')
 plt.ylabel('Throughput [Mb/s]')
@@ -145,6 +147,6 @@ plt.axhline(y=default_thr, color='r', linestyle='--')
 
 plt.xlabel('CW value')
 plt.ylabel('Throughput [Mb/s]')
-#plt.legend('')
+# plt.legend('')
 
 plt.savefig(f'results/graphs/backoff_optimization.pdf')
