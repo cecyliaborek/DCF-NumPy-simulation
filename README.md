@@ -1,6 +1,6 @@
 # An IEEE 802.11 Channel Access Simulator based on the Python NumPy Library
 
-### Created as an engneering project at AGH University of Science and Technology
+### Created as an engineering project at AGH University of Science and Technology
 
 Author: Cecylia Borek, Supervisor: Szymon Szott, PhD
 
