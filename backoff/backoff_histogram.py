@@ -8,7 +8,7 @@ cw_min = 15
 cw_max = 1023
 
 # getting all selected backoff values in one simulation run of DCF-NumPy
-_, backoffs = dcf_simulation(N=N, cw_min=cw_min, cw_max=cw_max, seed=1)
+_, _, backoffs = dcf_simulation(N=N, cw_min=cw_min, cw_max=cw_max, seed=1, debug=True)
 
 backoff_bins = [0] + [2 ** i for i in range(4, 11, 1)]
 backoff_hist, _ = np.histogram(backoffs, backoff_bins)

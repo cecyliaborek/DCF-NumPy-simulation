@@ -16,7 +16,7 @@ dcf_numpy_results = []
 for paylaod in mac_paylaods:
     for r in runs:
         current_run = [r, paylaod]
-        run_results, _ = dcf_simulation(
+        run_results= dcf_simulation(
             N=N, cw_min=cw_min, cw_max=cw_max, seed=r, mac_payload=paylaod, control_rate=24, data_rate=54)
         current_run.append(run_results.network_throughput)
         dcf_numpy_results.append(current_run)

@@ -105,9 +105,9 @@ def dcf_simulation(N, cw_min, cw_max, seed, data_rate=54, control_rate=24, mac_p
     debug_info = (np.sum(successful), np.sum(collisions), simulation_time)
 
     if(debug):
-        return simulation_results, debug_info
+        return simulation_results, debug_info, all_backoffs
 
-    return simulation_results, all_backoffs
+    return simulation_results
 
 
 def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, collision):
