@@ -17,7 +17,7 @@ simulation_results = []
 for r in runs:
     for cw in cw_values:
         current_run = [r, cw]
-        run_results, _ = dcf_simulation(N=N, cw_min=cw, cw_max=cw, seed=r)
+        run_results = dcf_simulation(N=N, cw_min=cw, cw_max=cw, seed=r)
         current_run.append(run_results.network_throughput)
         simulation_results.append(current_run)
 
