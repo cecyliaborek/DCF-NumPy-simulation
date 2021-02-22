@@ -6,7 +6,7 @@ Author: Cecylia Borek, Supervisor: [Szymon Szott, PhD](http://home.agh.edu.pl/~s
 
 ## Basic Description
 
-This IEEE 802.11 channel access simulator was created to support basic simulation scenarios and to facilitate research of the DCF function. It allows specifying various input parameters and returns probability of collission and aggregate network throughput as primary results. It was created in accordance with IEEE 802.11a, using the NumPy library and based on the contention round approach used in the simulation model of [this research paper](https://arxiv.org/abs/2007.14247). For more information regarding the simulator, project goals and assumptions made during the implementation of the simulator, refer to the [thesis]((https://github.com/cecyliaborek/DCF-NumPy-simulation/blob/master/thesis.pdf).
+This IEEE 802.11 channel access simulator was created to support basic simulation scenarios and to facilitate research of the DCF function. It allows specifying various input parameters and returns probability of collission and aggregate network throughput as primary results. It was created in accordance with IEEE 802.11a, using the NumPy library and based on the contention round approach used in the simulation model of [this research paper](https://arxiv.org/abs/2007.14247). For more information regarding the simulator, project goals and assumptions made during the implementation of the simulator, refer to the [thesis](https://github.com/cecyliaborek/DCF-NumPy-simulation/blob/master/thesis.pdf).
 
 ## Usage
 
