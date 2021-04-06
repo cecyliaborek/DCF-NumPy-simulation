@@ -5,7 +5,16 @@ import numpy as np
 import math
 
 
-def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate=24, mac_payload=1500, debug=False, sim_time=100):
+def dcf_simulation(
+        N,
+        cw_min=15,
+        cw_max=1023,
+        seed=1,
+        data_rate=54,
+        control_rate=24,
+        mac_payload=1500,
+        debug=False,
+        sim_time=100):
     """Simulates DCF function as method of multiple access in 802.11 network
     and returns mean probability of colliosion per station
 
@@ -49,7 +58,7 @@ def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate
     np.random.seed(seed)  # setting the seed of PRN generator
 
     # random backoff for each station
-    backoffs = np.random.randint(low=0, high=cw_min+1, size=N)
+    backoffs = np.random.randint(low=0, high=cw_min + 1, size=N)
 
     # initializing list of all backoff values throught the simulation
     all_backoffs = backoffs
@@ -67,7 +76,7 @@ def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate
         if len(next_tx) == 1:  # only one station had smallest backoff - success
             successful[next_tx] += 1
             retransmissions[next_tx] = 0
-            cw[next_tx] = cw_min+1
+            cw[next_tx] = cw_min + 1
             # selecting new backoff for the stations
             backoffs[next_tx] = np.random.randint(low=0, high=cw[next_tx])
             # appending the newly selected backoff to the array of all backoffs
@@ -78,7 +87,7 @@ def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate
                 collisions[tx] += 1
                 if retransmissions[tx] <= retry_limit:
                     retransmissions[tx] += 1
-                    cw[tx] = min(cw_max+1, cw[tx]*2)
+                    cw[tx] = min(cw_max + 1, cw[tx] * 2)
                     # cw is always the upper limit (excluded), therefore we only need to
                     # multiply it by two to get the next value of cw limit
                 else:  # if retry limit is met, cw and retransmissions couter are reset
@@ -86,20 +95,26 @@ def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate
                     cw[tx] = cw_min + 1
                 # new backoff chosen for all the station that collided
                 backoffs[tx] = np.random.randint(low=0, high=cw[tx])
-                # appending the newly selected backoff to the array of all backoffs
+                # appending the newly selected backoff to the array of all
+                # backoffs
                 all_backoffs = np.append(all_backoffs, backoffs[tx])
         # calculation of round time in slots
         tx_time[round] = transmission_time(
-            min_backoff, data_rate, control_rate, mac_payload, collision)['tx_time']
+            min_backoff,
+            data_rate,
+            control_rate,
+            mac_payload,
+            collision)['tx_time']
 
     simulation_results = Results()
 
     # calculation of collision probabilty per station and mean value of it
-    collision_probability = collisions/(successful + collisions)
+    collision_probability = collisions / (successful + collisions)
     simulation_results.mean_collision_probability = np.mean(
         collision_probability)
 
-    # calculation of throughput per station in b/s and aggregate throughput of whole network
+    # calculation of throughput per station in b/s and aggregate throughput of
+    # whole network
     simulation_time = np.sum(tx_time) * slot_time
     throughput = successful * mac_payload * 8 / (simulation_time)
     simulation_results.network_throughput = np.sum(throughput)
@@ -113,7 +128,12 @@ def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate
     return simulation_results
 
 
-def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, collision):
+def transmission_time(
+        backoff_slots,
+        data_rate,
+        control_rate,
+        mac_payload,
+        collision):
     """Calculates the time of single round of contention in dcf
 
     Args:
@@ -139,24 +159,26 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, colli
 
     ofdm_preamble = 16e-6  # s
     ofdm_signal = 24  # bits
-    ofdm_signal_duration = ofdm_signal/(control_rate * 1e6)  # s
+    ofdm_signal_duration = ofdm_signal / (control_rate * 1e6)  # s
     service = 16  # bits
     tail = 6  # bits
 
     # ack frame
-    ack = 14*8  # bits
+    ack = 14 * 8  # bits
     ack_duration = ofdm_preamble + ofdm_signal_duration + \
-        (service + ack + tail)/(control_rate * 1e6)  # s
+        (service + ack + tail) / (control_rate * 1e6)  # s
 
     # data frame
-    mac_header = 36*8  # bits
-    mac_tail = 4*8  # bits
-    mac_frame = mac_header + mac_payload*8 + mac_tail  # bits
-    padding = (math.ceil((service + mac_frame + tail) /
-                         bits_per_symbol[data_rate]) * bits_per_symbol[data_rate]) - (service + mac_frame + tail)  # bits
+    mac_header = 36 * 8  # bits
+    mac_tail = 4 * 8  # bits
+    mac_frame = mac_header + mac_payload * 8 + mac_tail  # bits
+    padding = (
+        math.ceil(
+            (service + mac_frame + tail) / bits_per_symbol[data_rate]) * bits_per_symbol[data_rate]) - (
+        service + mac_frame + tail)  # bits
 
     data_duration = ofdm_preamble + ofdm_signal_duration + \
-        (service + mac_frame + tail + padding)/(data_rate * 1e6)  # s
+        (service + mac_frame + tail + padding) / (data_rate * 1e6)  # s
 
     tx_time = difs + data_duration  # s
     # adding sifs and ack duration only if the transmission was successful
@@ -164,9 +186,9 @@ def transmission_time(backoff_slots, data_rate, control_rate, mac_payload, colli
         tx_time += sifs + ack_duration  # s
     # adding ack timeout (2*sifs) in case of collision
     else:
-        tx_time += 2*sifs  # s
+        tx_time += 2 * sifs  # s
 
-    tx_time_slots = math.ceil(tx_time/slot_duration) + backoff_slots  # slots
+    tx_time_slots = math.ceil(tx_time / slot_duration) + backoff_slots  # slots
 
     results['tx_time'] = tx_time_slots
     results['frame_time'] = data_duration

@@ -5,4 +5,9 @@ runs = [r for r in range(R)]
 N = 50
 sim_time = 50
 
-results = dcf_simulation(N=N, cw_min=15, cw_max=1023, seed=1, sim_time=sim_time)
+results = dcf_simulation(
+    N=N,
+    cw_min=15,
+    cw_max=1023,
+    seed=1,
+    sim_time=sim_time)

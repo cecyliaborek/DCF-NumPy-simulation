@@ -14,14 +14,16 @@ else:
 
 # simulation results
 simulation_results = pd.read_csv(
-    f'results/simulation_results_{cw_min}_{cw_max}_{retry}.csv', index_col=False)
+    f'results/simulation_results_{cw_min}_{cw_max}_{retry}.csv',
+    index_col=False)
 
 # extracting probability of collision from results of model calculation
 model_results = pd.read_csv(f'validation/results_model_{cw_min}_{cw_max}.csv')
 model_p_coll = model_results[['N', 'p_coll']]
 model_p_coll.columns = ['N', 'p_coll_model']
 
-# extracting probability of collision from results of matlab wifi_nr_model simulation
+# extracting probability of collision from results of matlab wifi_nr_model
+# simulation
 wifi_nr_results = pd.read_csv('validation/results_wifi_nr_ready.csv')
 wifi_nr_p_coll = wifi_nr_results[['N', 'p_coll_wifi_nr']]
 

@@ -58,10 +58,11 @@ plt.errorbar(
 )
 
 # plt.title(
-#    f"Mean probability of collision for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
+# f"Mean probability of collision for cwmin={cw_min} and cwmax={cw_max} \n
+# {retry}")
 plt.xlabel('Number of Contending Stations')
 plt.ylabel('Probability of Collision')
-plt.legend(['Analytical Model', 'Coexistance Model','DCF-NumPy', 'ns-3'])
+plt.legend(['Analytical Model', 'Coexistance Model', 'DCF-NumPy', 'ns-3'])
 plt.figtext(0.50, 0.3, 'MSE:')
 plt.figtext(0.50, 0.25, '* Analytical Model: %.2E' % Decimal(MSE_model))
 plt.figtext(0.50, 0.2, '* Coexistance Model: %.2E' % Decimal(MSE_matlab))
@@ -85,7 +86,8 @@ plt.errorbar(x=n, y=thr_sim, yerr=sim_conf_intervals, capsize=6, marker='s',
 plt.errorbar(x=n, y=thr_ns3, yerr=ns3_conf_intervals, capsize=6, marker='s',
              markersize=5, linestyle='dashed', color='c', mfc='c', mec='c')
 # plt.title(
-#    f"Throughput per station for cwmin={cw_min} and cwmax={cw_max} \n {retry}")
+# f"Throughput per station for cwmin={cw_min} and cwmax={cw_max} \n
+# {retry}")
 plt.xlabel('Number of Contending Stations')
 plt.ylabel('Throughput [Mb/s]')
 legend = plt.legend(['DCF-NumPy', 'ns-3'])
@@ -109,8 +111,17 @@ conf_dcf_numpy = thr_vs_packet['DCF-NumPy_thr_conf']
 thr_ns3 = thr_vs_packet['thr_ns3']
 conf_thr_ns3 = thr_vs_packet['thr_ns3_conf']
 
-plt.errorbar(x=payload, y=thr_dcf_numpy, yerr=conf_dcf_numpy, capsize=6, marker='s',
-             markersize=5, linestyle='dashed', color='b', mfc='b', mec='b')
+plt.errorbar(
+    x=payload,
+    y=thr_dcf_numpy,
+    yerr=conf_dcf_numpy,
+    capsize=6,
+    marker='s',
+    markersize=5,
+    linestyle='dashed',
+    color='b',
+    mfc='b',
+    mec='b')
 
 plt.errorbar(x=payload, y=thr_ns3, yerr=conf_thr_ns3, capsize=6, marker='s',
              markersize=5, linestyle='dashed', color='c', mfc='c', mec='c')
@@ -130,9 +141,9 @@ x = thr_vs_mcs['mcs']
 
 ax = plt.subplot(111)
 offset = 0.3
-ax.bar(x - offset/2, thr_vs_mcs['DCF-NumPy_thr'], width=offset,
+ax.bar(x - offset / 2, thr_vs_mcs['DCF-NumPy_thr'], width=offset,
        color='b', yerr=thr_vs_mcs['DCF-NumPy_thr_conf'], capsize=4)
-ax.bar(x+offset/2, thr_vs_mcs['thr_ns3'], width=offset,
+ax.bar(x + offset / 2, thr_vs_mcs['thr_ns3'], width=offset,
        color='c', yerr=thr_vs_mcs['thr_ns3_conf'], capsize=4)
 
 plt.xlabel('Modulation and coding scheme')

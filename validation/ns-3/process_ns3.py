@@ -8,7 +8,7 @@ dir_path = os.path.dirname(os.path.realpath(
 
 ns3_results_dt = pd.read_csv(f'{dir_path}/ns3_raw.csv')
 
-#deleting anomallies i.e. runs where thr was equal to 0
+# deleting anomallies i.e. runs where thr was equal to 0
 ns3_results_dt = delete_anomallies.delete_zeroes(ns3_results_dt, 'thr_ns3')
 
 # calculating the confidence intervals for throughput results

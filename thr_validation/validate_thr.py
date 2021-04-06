@@ -12,9 +12,13 @@ runs = [i + 1 for i in range(10)]
 
 # running dcf NumPy simulation to get results for given parameters
 dcf_numpy_thr = dcf_simulation(
-    N=N, cw_min=cw_min, cw_max=cw_max, seed=1, mac_payload=1472).network_throughput
+    N=N,
+    cw_min=cw_min,
+    cw_max=cw_max,
+    seed=1,
+    mac_payload=1472).network_throughput
 # convertinh into Mbps
-dcf_numpy_thr = dcf_numpy_thr/(1e6)
+dcf_numpy_thr = dcf_numpy_thr / (1e6)
 
 # running ns-3 simulation to get results for given parameter
 stream = subprocess.check_output(
@@ -42,7 +46,7 @@ plt.ylabel('Throughput [Mb/s]')
 plt.title(f'Throuhput comparison for CWmin={cw_min}, CWmax={cw_max}, N={N}')
 
 # dispalying values for each bar
-#for rect, value in zip(rects, results):
+# for rect, value in zip(rects, results):
 #    height = rect.get_height()
 #    ax.text(rect.get_x() + rect.get_width()/2., height,
 #            '%.4f' % value,

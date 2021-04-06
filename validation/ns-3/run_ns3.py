@@ -18,8 +18,7 @@ for n in no_stations:
         print(n, r)
         stream = subprocess.check_output(
             f'cd ~/ns-allinone-3.31/ns-3.31/ && ./waf --run "scratch/80211a-performance --RngRun={r} --simulationTime=100 --nWifi={n}" | tail -n 3 | head -n 2',
-            shell=True
-        )
+            shell=True)
 
         results = stream.decode('utf-8').strip().split()
         thr = float(results[3])
@@ -36,4 +35,3 @@ ns3_results_dt = pd.DataFrame(ns3_results, columns=[
 ])
 
 ns3_results_dt.to_csv(f'{dir_path}/ns3_raw.csv')
-
