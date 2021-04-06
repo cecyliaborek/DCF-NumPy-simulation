@@ -73,7 +73,7 @@ def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate
             # appending the newly selected backoff to the array of all backoffs
             all_backoffs = np.append(all_backoffs, backoffs[next_tx])
         else:  # more than one station with smallest backoff - collision
-            collision = True  # collision set to True, necesarry for transmission time calculation
+            collision = True  # collision - True, necesarry for transmission time calculation
             for tx in next_tx:
                 collisions[tx] += 1
                 if retransmissions[tx] <= retry_limit:
@@ -81,7 +81,7 @@ def dcf_simulation(N, cw_min=15, cw_max=1023, seed=1, data_rate=54, control_rate
                     cw[tx] = min(cw_max+1, cw[tx]*2)
                     # cw is always the upper limit (excluded), therefore we only need to
                     # multiply it by two to get the next value of cw limit
-                else:  # if retry limit is met, values of cw and retransmissions couter are reset
+                else:  # if retry limit is met, cw and retransmissions couter are reset
                     retransmissions[tx] = 0
                     cw[tx] = cw_min + 1
                 # new backoff chosen for all the station that collided
