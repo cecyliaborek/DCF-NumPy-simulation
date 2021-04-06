@@ -1,3 +1,6 @@
+# simulator created as an engineering project
+# author: Cecylia Borek <cecylia.borek@gmail.com>
+
 import numpy as np
 import math
 
