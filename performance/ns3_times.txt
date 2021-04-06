@@ -1,0 +1,59 @@
+Starting simulation... done!
+
+real	15m18.425s
+user	15m18.610s
+sys	0m0.113s
+
+Starting simulation... done!
+
+real	15m2.848s
+user	15m3.088s
+sys	0m0.146s
+
+Starting simulation... done!
+
+real	15m21.129s
+user	15m21.347s
+sys	0m0.096s
+
+Starting simulation... done!
+
+real	15m21.516s
+user	15m21.675s
+sys	0m0.114s
+
+Starting simulation... done!
+
+real	15m22.598s
+user	15m22.761s
+sys	0m0.151s
+
+Starting simulation... done!
+
+real	15m10.366s
+user	15m10.587s
+sys	0m0.092s
+
+Starting simulation... done!
+
+real	15m7.824s
+user	15m8.013s
+sys	0m0.127s
+
+Starting simulation... done!
+
+real	15m20.675s
+user	15m20.877s
+sys	0m0.113s
+
+Starting simulation... done!
+
+real	15m12.098s
+user	15m12.284s
+sys	0m0.119s
+
+Starting simulation... done!
+
+real	15m3.546s
+user	15m3.755s
+sys	0m0.099s
