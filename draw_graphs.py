@@ -63,9 +63,9 @@ plt.xlabel('Number of Contending Stations')
 plt.ylabel('Probability of Collision')
 plt.legend(['Analytical Model', 'Coexistance Model','DCF-NumPy', 'ns-3'])
 plt.figtext(0.50, 0.3, 'MSE:')
-plt.figtext(0.50, 0.25, '* Analytical Model: %.4E' % Decimal(MSE_model))
-plt.figtext(0.50, 0.2, '* Coexistance Model: %.4E' % Decimal(MSE_matlab))
-plt.figtext(0.50, 0.15, '* ns-3: %.4E' % Decimal(MSE_ns3))
+plt.figtext(0.50, 0.25, '* Analytical Model: %.2E' % Decimal(MSE_model))
+plt.figtext(0.50, 0.2, '* Coexistance Model: %.2E' % Decimal(MSE_matlab))
+plt.figtext(0.50, 0.15, '* ns-3: %.2E' % Decimal(MSE_ns3))
 plt.savefig(f'results/graphs/p_coll_result_{cw_min}_{cw_max}_{retry}.pdf')
 
 # throughput graph
